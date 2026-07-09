@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'bnazanin';
+  src: url('../public/font/B-NAZANIN.TTF');
+}
+.font-b{
+  font-family:'bnazanin' ;
+}
+
+@font-face {
+  font-family: 'laleh';
+  src: url('../public/font/Lalezar-Regular.ttf');
+}
+.font-l{
+  font-family:'laleh' ;
+}
+
