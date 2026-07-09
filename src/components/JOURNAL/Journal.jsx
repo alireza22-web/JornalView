@@ -92,13 +92,14 @@ export function Journal(){
           </thead>
           <tbody>
             {
+              trades.length > 0 &&
               trades.map(trade=>{
                 return(
                   <tr key={trade.id} className="hover:bg-zinc-300 uppercase dark:hover:bg-zinc-900" >
                     <th className="th-table">{trade.date}</th>
                     <th className="th-table">{trade.symbol}</th>
-                    <th className="th-table">{sideIcon(trade.type)}</th>
-                    <th className="th-table">{numberPnl(trade.pnl)}</th>
+                    <th className="th-table font-light">{sideIcon(trade.type)}</th>
+                    <th className="th-table font-light">{numberPnl(trade.pnl)}</th>
                     <th className="th-table">
                       <Link className="w-full h-full cursor-pointer flex items-center justify-center gap-1" to={`/journal/${trade.id}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
@@ -107,10 +108,14 @@ export function Journal(){
                     </th>
                   </tr>
                 )
-              })
+              })              
             }
           </tbody>
         </table>
+        {
+          trades.length == 0 && 
+          <div className=" text-center text-2xl py-2">هیچی ژورنال نداری داداش</div>
+        }
         <div>
           <div className="justify-between items-center flex px-3 py-2">
             <span>تعداد معاملات : {trades.length}</span>
