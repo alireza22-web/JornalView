@@ -1,12 +1,14 @@
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import { Link } from "react-router-dom";
+import { data, Link } from "react-router-dom";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { db } from "../../db/dexie";
+import { Validation } from "../../validation/Validation";
 
 export function AddJournalDetail(){
+  const [image,setImage] = useState(null)
 
   const [formData, setFormData] = useState({
     symbol: "",
@@ -24,8 +26,6 @@ export function AddJournalDetail(){
     lotSize: "",
     riskReward: "",
     note: "",
-    image: null,
-    tradingViewLink: ""
 });
 
 const handleChange = (e) => {
@@ -39,7 +39,13 @@ const handleChange = (e) => {
 
 const handleSubmit = async () => {
   try {
+    // const error = Validation(formData);
+    // if (error) {
+    //   toast.error(error);
+    //   return;
+    // }
     await db.trades.add(formData);
+    console.log(formData);
     toast.success('ژورنال با موفقیت ذخیره شد')
     setFormData({
       symbol: "",
@@ -64,6 +70,20 @@ const handleSubmit = async () => {
     toast.error('مشکلی پیش آمده لحظات دیگری امتحان کنید')
     console.log(error);
   }
+}
+function handlePaste(e){
+  const items = e.clipboardData.items;
+    for (const item of items) {
+        if (item.type.startsWith("image/")) {
+            const file = item.getAsFile();
+            setImage(file);
+            setFormData((prev) => ({
+              ...prev,
+              image: file,
+            }));            
+            break;
+        }
+    }
 }
 
   return (
@@ -109,10 +129,19 @@ const handleSubmit = async () => {
             <input onChange={handleChange} value={formData.session} name="session" type="text" className="inp-add-d" placeholder="سشن" />
             <input onChange={handleChange} value={formData.timeframe} name="timeframe" type="text" className="inp-add-d" placeholder="تایم فریم" />
           </div>
-          <div className="border-2 border-dashed col-span-2 bg-zinc-100 dark:bg-zinc-900 border-zinc-300 w-full h-full flex flex-col items-center justify-center">
-            <span>ctrl + v</span>
-            <span>کپی عکس معامله</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-polaroid"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" /><path d="M4 16l16 0" /><path d="M4 12l3 -3c.928 -.893 2.072 -.893 3 0l4 4" /><path d="M13 12l2 -2c.928 -.893 2.072 -.893 3 0l2 2" /><path d="M14 7l.01 0" /></svg>
+          <div onPaste={handlePaste} className="border-2 border-dashed col-span-2 bg-zinc-100 dark:bg-zinc-900 border-zinc-300 w-full h-90 p-2 flex flex-col items-center justify-center">
+            {
+              image ?
+              <>
+                <img src={URL.createObjectURL(image)} className="w-full h-full object-contain" alt="" />
+              </>
+              :
+              <>
+                <span>ctrl + v</span>
+                <span>کپی عکس معامله</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-polaroid"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" /><path d="M4 16l16 0" /><path d="M4 12l3 -3c.928 -.893 2.072 -.893 3 0l4 4" /><path d="M13 12l2 -2c.928 -.893 2.072 -.893 3 0l2 2" /><path d="M14 7l.01 0" /></svg>
+              </>         
+            }
           </div>
         </div>
         <div className="w-full h-full p-2 ">

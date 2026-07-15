@@ -14,3 +14,14 @@
   font-family:'laleh' ;
 }
 
+.animate-modal{
+  animation: modal 0.8s forwards;
+}
+
+@keyframes modal {
+  0%{
+    opacity: 0;
+  }50%{
+    opacity: 100%;
+  }
+}

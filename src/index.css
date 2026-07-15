@@ -27,4 +27,7 @@
   .inp-add-d{
     @apply px-6 dark:placeholder:text-white placeholder:text-zinc-500 py-1 border rounded-lg border-zinc-400 outline-none focus:border-dashed transition-all duration-200;
   }
+  .card{
+    @apply shadow-xl rounded-2xl border border-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 px-6 py-2 hover:border-sky-500 transition-all
+  }
 }

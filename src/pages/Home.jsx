@@ -12,7 +12,7 @@ export function Home(){
       <aside className="w-82 bg-white border-l border-zinc-50 dark:bg-zinc-900 dark:border-l dark:border-zinc-800">
         <SideBar/>
       </aside>
-      <main className="flex-1 overflow-y-auto bg-zinc-200 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+      <main className="flex-1  overflow-y-auto bg-zinc-200 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
         <Navbar/>
         <Dashboard/>
       </main>

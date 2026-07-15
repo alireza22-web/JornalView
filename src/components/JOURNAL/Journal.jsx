@@ -8,6 +8,7 @@ import { numberPnl } from "../../hooks/numberPnl";
 import { sideIcon } from "../../hooks/sideIcon";
 import { useEffect, useState } from "react";
 import { db } from "../../db/dexie";
+import { filter } from "../../hooks/filter";
 export function Journal(){
   const [trades,setTrades] = useState([])
   async function loadData(){
@@ -21,29 +22,51 @@ export function Journal(){
   useEffect(()=>{
     loadData()
   },[])
+  const [filters, setFilters] = useState({
+    symbol: "",
+    result: "",
+    type: "",
+    fromDate: "",
+    toDate: "",
+    sort: "newest",
+});
+const filteredTrades = filter(trades, filters);
+const handleFilter = (e)=>{
+  const {name,value}=e.target;
+  setFilters(prev=>({
+      ...prev,
+      [name]:value
+  }));
+}
   return (
     <article className="py-2 px-6">
       <div className="flex items-center justify-between gap-1 text-center pb-3 pt-6 text-5xl border-b-2 border-dashed">
         <span><span className="text-blue-700">ژورنال</span> معاملات</span>
         <p className="text-lg dark:text-zinc-300">ثبت و مدیریت تمام معاملات انجام شده</p>
       </div>
-      <div className="flex flex-col gap-4 py-5 text-xl">
+      <div className="flex flex-col gap-4 py-5 text-lg">
         <span>فیلتر بر اساس:</span>
-        <div className="flex justify-between items-center">
-          <input type="search" placeholder="جستجو بر اساس نماد یا توضیحات..." className=" p-2 w-1/2 placeholder:text-sm dark:bg outline-none border dark:border-zinc-700 dark:bg-zinc-800 border-zinc-200 bg-zinc-300 rounded-lg"/>
+        <div className="flex justify-between items-center px-12 text-base">
           <div className="flex gap-2 items-center">
             <label htmlFor="date">از تاریخ</label>
-            <DatePicker calendar={persian} locale={persian_fa} inputClass="px-2 py-1 outline-none border border-zinc-300 rounded-lg dark:border-zinc-700"/>
+            <DatePicker onChange={(value)=>{
+                setFilters(prev=>({
+                    ...prev,
+                    fromDate:value?.format("YYYY/MM/DD") || ""
+                }))
+            }} calendar={persian} locale={persian_fa} inputClass="px-2 py-1 outline-none border border-zinc-300 rounded-lg dark:border-zinc-700"/>
           </div>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-1 items-center">
             <label htmlFor="date">تا تاریخ</label>
-            <DatePicker calendar={persian} locale={persian_fa} inputClass="px-2 py-1 outline-none border border-zinc-300 rounded-lg dark:border-zinc-700"/>
+            <DatePicker  onChange={(value)=>{
+                setFilters(prev=>({
+                    ...prev,
+                    toDate:value?.format("YYYY/MM/DD") || ""
+                }))
+            }} calendar={persian} locale={persian_fa} inputClass="px-2 py-1 outline-none border border-zinc-300 rounded-lg dark:border-zinc-700"/>
           </div>
-        </div>
-        <div className="flex w-1/2 justify-between">
-          <label className="gap-2 flex items-center" htmlFor="">
-            <span>نماد ها</span>
-            <select name="" id="" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-400 rounded-lg">
+            <select onChange={handleFilter} name="symbol" id="" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-300 rounded-lg">
+              <option  value="">نماد ها</option>
               <option value="XAUUSD">XAUUSD</option>
               <option value="US30">US30</option>
               <option value="GBPUSD">GBPUSD</option>
@@ -51,24 +74,24 @@ export function Journal(){
               <option value="USDCAD">USDCAD</option>
               <option value="EURUSD">EURUSD</option>
             </select>
-          </label>
-          <label className="gap-2 flex items-center" htmlFor="">
-            <span>مرتب سازی</span>
-            <select name="" id="" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-400 rounded-lg">
-              <option value="جدیدترین">جدیدترین</option>
-              <option value="قدیمی ترین">قدیمی ترین</option>
-              <option value="بیشترین سود">بیشترین سود</option>
-              <option value="بیشترین ضرر">بیشترین ضرر</option>
+            <select onChange={handleFilter} name="sort" id="" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-300 rounded-lg">
+              <option value="مرتب سازی">مرتب سازی</option>
+              <option value="newest">جدیدترین</option>
+              <option value="oldest">قدیمی ترین</option>
+              <option value="profit">بیشترین سود</option>
+              <option value="loss">بیشترین ضرر</option>
             </select>
-          </label>
-          <label className="gap-2 flex items-center" htmlFor="">
-            <span>نتایج</span>
-            <select name="" id="" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-400 rounded-lg">
-              <option value="سود">🟢سود</option>
-              <option value="ضرر">🔴ضرر</option>
-              <option value="سر به سر">🟡سر به سر</option>
+            <select onChange={handleFilter} name="type" id="" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-300 rounded-lg">
+              <option value="">نوع معامله</option>
+              <option value="خرید">خرید</option>
+              <option value="فروش">فروش</option>
             </select>
-          </label>
+            <select onChange={handleFilter} name="result" id="" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-300 rounded-lg">
+              <option value="">نتایج</option>
+              <option value="TP">🟢سود</option>
+              <option value="SL">🔴ضرر</option>
+              <option value="FR">🟡سر به سر</option>
+            </select>
         </div>
       </div>
       <div className="p-4">
@@ -92,8 +115,8 @@ export function Journal(){
           </thead>
           <tbody>
             {
-              trades.length > 0 &&
-              trades.map(trade=>{
+              filteredTrades.length > 0 &&
+              filteredTrades.map(trade=>{
                 return(
                   <tr key={trade.id} className="hover:bg-zinc-300 uppercase dark:hover:bg-zinc-900" >
                     <th className="th-table">{trade.date}</th>
@@ -113,7 +136,7 @@ export function Journal(){
           </tbody>
         </table>
         {
-          trades.length == 0 && 
+          filteredTrades.length == 0 && 
           <div className=" text-center text-2xl py-2">هیچی ژورنال نداری داداش</div>
         }
         <div>
@@ -130,7 +153,7 @@ export function Journal(){
             </span>
             <span>نمایش 1 تا 10 از {trades.length}</span>
           </div>
-        </div>
+        </div>{/* pagination */}
       </div>{/* tables */}
     </article>
   )

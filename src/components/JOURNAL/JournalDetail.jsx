@@ -10,6 +10,8 @@ export function JournalDetail({id}){
   const [data , setData] = useState({})
   const [isEdit , setIsEdit] = useState(false)
   const [modal , setModal] = useState(false)
+  const [imageUrl, setImageUrl] = useState("");
+  const [image,setImage] = useState(null)
   const pRef = useRef(null);
   const copyText = async () => {
     try {
@@ -25,8 +27,7 @@ export function JournalDetail({id}){
     const journal = await db.trades.get(Number(id))  
     setData(journal) 
     setFormData(journal);
-    console.log(journal);
-    
+    setImage(journal.image);
   }
   useEffect(()=>{
     loadData()
@@ -40,28 +41,49 @@ export function JournalDetail({id}){
     await db.trades.delete(Number(id));
     toast.success("ژورنال حذف شد.");
     navigate("/journal");
-};
-const handleChange = (e) => {
-  const { name, value } = e.target;
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-  setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-  }));
-};
-const handleUpdate = async (e) => {
-  try {
-      e.preventDefault();
-      await db.trades.update(Number(id), formData);
-      setData(formData);
-      setIsEdit(false);
-      console.log('dasdas');
-      
-      toast.success("ویرایش با موفقیت انجام شد");
-  } catch (err) {
-      toast.error("خطا در ویرایش");
-  }
-};
+    setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+    }));
+  };
+  const handleUpdate = async (e) => {
+    try {
+        e.preventDefault();
+        await db.trades.update(Number(id), formData);
+        setData(formData);
+        setIsEdit(false);
+        console.log('dasdas');
+        
+        toast.success("ویرایش با موفقیت انجام شد");
+    } catch (err) {
+        toast.error("خطا در ویرایش");
+    }
+  };
+  const previewImage = image ? URL.createObjectURL(image): null;
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (const item of items) {
+      if (item.type.startsWith("image/")) {
+        const file = item.getAsFile();
+        if (!file) return;
+        setImage(file);
+        console.log(image);
+        setFormData((prev) => ({
+          ...prev,
+          image: file,
+        }));
+        return;
+      }
+    }
+
+    toast.error("هیچ تصویری داخل Clipboard پیدا نشد.");
+  };
   return (
     <article className={`uppercase ${modal ? `relative`:``}`}>
       <button>
@@ -74,21 +96,21 @@ const handleUpdate = async (e) => {
         <div className='w-120 h-72 bg-zinc-300 dark:bg-zinc-900'>
           {
             modal ?
-              <div className='w-310  h-160 right-1/2 translate-x-1/2 absolute bg-black/60'>
-                <svg className='text-white' onClick={()=>setModal(false)}  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
-                <img className='w-300 h-150 right-1/2 translate-x-1/2 absolute object-contain' src={img} alt="" />
+              <div className='w-full h-full right-1/2 translate-x-1/2 fixed top-1/2 -translate-y-1/2 bg-black/20 backdrop-blur-sm'>
+                <span className={` bg-black/30 p-2 pb-0 absolute top-20 right-20 text-4xl text-white cursor-pointer`} onClick={()=>setModal(false)}>✕</span>
+                <img onClick={(e)=>e.stopPropagation()} className={`${modal && 'animate-modal'} max-w-[90vw] max-h-[90vh] top-1/2 -translate-y-1/2 rounded-xl right-1/2 translate-x-1/2 absolute object-contain`} src={previewImage} alt="" />
               </div>
             :
             isEdit ?
             <div className='flex flex-col  h-80 gap-1'>
-              <img className='w-full h-full object-contain' src={img} alt="image" />
-              <div className='flex gap-0.5 bg-sky-200 cursor-pointer hover:bg-sky-300 transition-colors dark:bg-sky-900 dark:hover:bg-sky-950 px-4 py-1'>
+              <img className='w-full h-full object-contain' src={previewImage} alt="image" />
+              <div onPaste={handlePaste} className='flex gap-0.5 bg-sky-200 cursor-pointer hover:bg-sky-300 transition-colors dark:bg-sky-900 dark:hover:bg-sky-950 px-4 py-1'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-transfer"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M20 10h-16l5.5 -6" /><path d="M4 14h16l-5.5 6" /></svg>
-                <span className=''>تغییر عکس</span>
+                <span className=''>برای ویرایش عکس ctrl + v</span>
               </div>
             </div>
             :
-            <img onClick={()=>setModal(true)} className='w-full h-full object-contain' src={img} alt="" />
+            <img onClick={()=>setModal(true)} className='w-full h-full cursor-pointer hover:blur-[1px] transition-all duration-1000 object-contain' src={previewImage} alt="" />
           }
         </div>
         {
@@ -164,13 +186,13 @@ const handleUpdate = async (e) => {
         isEdit ?
         <div className='p-6 mx-3 flex flex-col gap-6'>
           <form onSubmit={handleUpdate} className='flex w-full flex-wrap gap-4'>
-            <input placeholder='نقطه ورود' name='entry' onChange={handleChange} value={formData.entry || ''} className='inp-e-d border-yellow-600 outline-yellow-600 bg-yellow-200' type="text" defaultValue={`نقطه ورود : ${data.entry}`}/>
-            <input placeholder='حد ضرر' name='stopLoss' onChange={handleChange} value={formData.stopLoss || ''} className='inp-e-d border-red-600 outline-red-600 bg-red-200' type="text" defaultValue={`حد ضرر : ${data.stopLoss}`}/>
-            <input placeholder='حد سود' name='takeProfit' onChange={handleChange} value={formData.takeProfit || ''} className='inp-e-d border-green-600 outline-green-600 bg-green-200' type="text" defaultValue={`حد سود : ${data.takeProfit}`}/>
-            <input placeholder='حجم معامله' name='lotSize' onChange={handleChange} value={formData.lotSize || ''} className='inp-e-d border-violet-600 outline-violet-600 bg-violet-200' type="text" defaultValue={`حجم معامله : ${data.lotSize}`}/>
-            <input placeholder='ریسک به ریوارد' name='riskReward' onChange={handleChange} value={formData.riskReward || ''} className='inp-e-d border-sky-600 outline-sky-600 bg-sky-200' type="text" defaultValue={`ریسک به ریوارد : ${data.riskReward}`}/>
-            <input placeholder='سشن' name='session' onChange={handleChange} value={formData.session || ''} className='inp-e-d border-stone-600 outline-stone-600 bg-stone-200' type="text" defaultValue={`سشن : ${data.session}`}/>
-            <input placeholder='تایم فریم' name='timeframe' onChange={handleChange} value={`${formData.timeframe || ''}`} className='inp-e-d border-pink-600 outline-pink-600 bg-pink-200' type="text" defaultValue={`تایم فریم : ${data.timeframe}`}/>
+            <input placeholder='نقطه ورود' name='entry' onChange={handleChange} value={formData.entry || ''} className='inp-e-d border-yellow-600 outline-yellow-600 bg-yellow-200' type="text" />
+            <input placeholder='حد ضرر' name='stopLoss' onChange={handleChange} value={formData.stopLoss || ''} className='inp-e-d border-red-600 outline-red-600 bg-red-200' type="text" />
+            <input placeholder='حد سود' name='takeProfit' onChange={handleChange} value={formData.takeProfit || ''} className='inp-e-d border-green-600 outline-green-600 bg-green-200' type="text" />
+            <input placeholder='حجم معامله' name='lotSize' onChange={handleChange} value={formData.lotSize || ''} className='inp-e-d border-violet-600 outline-violet-600 bg-violet-200' type="text" />
+            <input placeholder='ریسک به ریوارد' name='riskReward' onChange={handleChange} value={formData.riskReward || ''} className='inp-e-d border-sky-600 outline-sky-600 bg-sky-200' type="text" />
+            <input placeholder='سشن' name='session' onChange={handleChange} value={formData.session || ''} className='inp-e-d border-stone-600 outline-stone-600 bg-stone-200' type="text" />
+            <input placeholder='تایم فریم' name='timeframe' onChange={handleChange} value={`${formData.timeframe || ''}`} className='inp-e-d border-pink-600 outline-pink-600 bg-pink-200' type="text"/>
           </form>
           <div className='px-6 py-2 bg-gray-300 text-lg rounded-xl dark:bg-gray-900'>
             <div className='flex items-center justify-between'>
