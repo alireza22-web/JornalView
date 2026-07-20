@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 export function SideBar(){
   const linkSide = [
     {
@@ -23,6 +23,12 @@ export function SideBar(){
         <span className="text-zinc-800 dark:text-zinc-100"><span className="text-blue-700">ژورنال</span> ویو</span>
       </div>
       <div className="p-3 mt-12 text-2xl flex-col flex gap-2 font-b font-extrabold text-zinc-950 dark:text-zinc-200">
+        <Link to={'/'} className="p-2 rounded-lg transition-colors duration-200 hover:bg-zinc-200 dark:hover:bg-zinc-950">
+          <span className="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-home"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+            <span>صفحه اصلی</span>
+          </span>
+        </Link>
         {
           linkSide.map(side=>{
             return (
@@ -35,6 +41,7 @@ export function SideBar(){
             )
           })
         }
+        
       </div>
     </div>
   );

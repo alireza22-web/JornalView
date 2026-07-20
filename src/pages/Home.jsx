@@ -1,21 +1,34 @@
-import { useEffect, useState } from "react";
-import '../custom.css'
-import useTheme from "../hooks/useThem";
-import { SideBar } from "../components/SideBar";
-import { Dashboard } from "../components/Dashboard";
-import { NavLink } from "react-router-dom";
-import { Navbar } from "../components/Navbar";
-export function Home(){
+import { DashPreview } from "../components/HOME/DashPreview";
+import { ExplainDash } from "../components/HOME/explainDash";
+import { FAQ } from "../components/HOME/FAQ";
+import { Footer } from "../components/HOME/Footer";
+import { Header } from "../components/HOME/Header";
+import { NavbarHome } from "../components/HOME/NavbarHome";
+import { StatsCustomer } from "../components/HOME/StatsCustomer";
+import { TrustDashE } from "../components/HOME/TrustDashE";
+import { WorkHow } from "../components/HOME/WorkHow";
+// import WorkHow from "../components/HOME/WorkHow";
 
+import useTheme from "../hooks/useThem";
+
+export function Home(){
   return (
-    <div className="flex h-screen font-l transition-colors duration-200">
-      <aside className="w-82 bg-white border-l border-zinc-50 dark:bg-zinc-900 dark:border-l dark:border-zinc-800">
-        <SideBar/>
-      </aside>
-      <main className="flex-1  overflow-y-auto bg-zinc-200 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
-        <Navbar/>
-        <Dashboard/>
-      </main>
+    <div className="bg-zinc-100 dark:bg-zinc-950 min-h-screen dark:text-zinc-100 text-zinc-900">
+      <article className="container mx-auto font-l ">
+        <div className="min-h-screen">
+          <NavbarHome/>
+          <Header/>
+        </div>
+        <div>
+          <StatsCustomer/>
+          <ExplainDash />
+          <WorkHow />
+          <DashPreview />
+          <TrustDashE />
+          <FAQ />
+        </div>
+      </article>
+          <Footer/>
     </div>
-  );
+  )
 }

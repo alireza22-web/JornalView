@@ -84,7 +84,7 @@ export function WinRateChart({ winTrade, lossTrade }) {
         نرخ موفقیت
       </h3>
       <div className="h-50 flex items-center justify-center">
-        <Doughnut
+        <Pie
           className=""
           data={data}
           options={options}
