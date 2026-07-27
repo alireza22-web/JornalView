@@ -24,12 +24,12 @@ export function StatsCustomer() {
       color: "from-purple-500 to-fuchsia-500",
     },
     {
-      title: "همیشه در دسترس",
-      number: 24,
-      suffix: "/7",
-      desc: "در هر زمان و هر دستگاه",
+      title: "معامله ثبت شده",
+      number: 18500,
+      suffix: "+",
+      desc: "ثبت و تحلیل معاملات توسط کاربران ژورنال ویو",
       color: "from-orange-500 to-red-500",
-    },
+    }
   ];
 
   return (

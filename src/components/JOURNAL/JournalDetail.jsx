@@ -33,6 +33,7 @@ export function JournalDetail({id}){
     loadData()
   },[id])
   const navigate = useNavigate();
+
   const handleDelete = async () => {
     const confirmDelete = window.confirm(
         "آیا از حذف این ژورنال مطمئن هستید؟"
@@ -42,6 +43,7 @@ export function JournalDetail({id}){
     toast.success("ژورنال حذف شد.");
     navigate("/journal");
   };
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
 

@@ -9,6 +9,7 @@ import { sideIcon } from "../../hooks/sideIcon";
 import { useEffect, useState } from "react";
 import { db } from "../../db/dexie";
 import { filter } from "../../hooks/filter";
+import { ExportDropdown } from "../ExportDropdown";
 export function Journal(){
   const [trades,setTrades] = useState([])
   async function loadData(){
@@ -65,28 +66,29 @@ const handleFilter = (e)=>{
                 }))
             }} calendar={persian} locale={persian_fa} inputClass="px-2 py-1 outline-none border border-zinc-300 rounded-lg dark:border-zinc-700"/>
           </div>
-            <select onChange={handleFilter} name="symbol" id="" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-300 rounded-lg">
+            <select onChange={handleFilter} name="symbol" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-300 rounded-lg">
               <option  value="">نماد ها</option>
-              <option value="XAUUSD">XAUUSD</option>
-              <option value="US30">US30</option>
-              <option value="GBPUSD">GBPUSD</option>
-              <option value="JPYUSD">USDJPY</option>
+              <option value="xauusd">XAUUSD</option>
+              <option value="us30">US30</option>
+              <option value="ndx100">NDX100</option>
+              <option value="gbpusd">GBPUSD</option>
+              <option value="jpyusd">USDJPY</option>
               <option value="USDCAD">USDCAD</option>
               <option value="EURUSD">EURUSD</option>
             </select>
-            <select onChange={handleFilter} name="sort" id="" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-300 rounded-lg">
+            <select onChange={handleFilter} name="sort" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-300 rounded-lg">
               <option value="مرتب سازی">مرتب سازی</option>
               <option value="newest">جدیدترین</option>
               <option value="oldest">قدیمی ترین</option>
               <option value="profit">بیشترین سود</option>
               <option value="loss">بیشترین ضرر</option>
             </select>
-            <select onChange={handleFilter} name="type" id="" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-300 rounded-lg">
+            <select onChange={handleFilter} name="type" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-300 rounded-lg">
               <option value="">نوع معامله</option>
               <option value="خرید">خرید</option>
               <option value="فروش">فروش</option>
             </select>
-            <select onChange={handleFilter} name="result" id="" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-300 rounded-lg">
+            <select onChange={handleFilter} name="result" className="appearance-none px-6 py-1 dark:bg-zinc-950 outline-none border border-zinc-300 rounded-lg">
               <option value="">نتایج</option>
               <option value="TP">🟢سود</option>
               <option value="SL">🔴ضرر</option>
@@ -97,11 +99,14 @@ const handleFilter = (e)=>{
       <div className="p-4">
         <div className="flex justify-between items-center">
           <span className="text-4xl">معاملات</span>
-          <Link to={'/add'}>
-            <button className="text-xl cursor-pointer px-6 py-2 transition-colors duration-200 bg-blue-400 hover:bg-blue-500 dark:bg-blue-700 dark:hover:bg-blue-800 rounded-xl">
-              <span>+ افزون ژورنال</span>
-            </button>
-          </Link>
+          <div className="flex gap-2 items-center">
+            <ExportDropdown trades={trades} />
+            <Link to={'/add'}>
+              <button className="text-xl cursor-pointer px-6 py-2 transition-colors duration-200 bg-blue-400 hover:bg-blue-500 dark:bg-blue-700 dark:hover:bg-blue-800 rounded-xl">
+                <span>+ افزون ژورنال</span>
+              </button>
+            </Link>
+          </div>
         </div>
         <table className="mt-3 font-l bg-red-60 w-full text-lg rounded-3xl">
           <thead>
