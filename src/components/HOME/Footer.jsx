@@ -69,7 +69,7 @@ export function Footer(){
     },
   ];
   return (
-    <footer className="mt-24 border-t-2 border-zinc-600/20 w-full font-l bg-zinc-900 p-2 text-white ">
+    <footer id="connect" className="mt-24 border-t-2 border-zinc-600/20 w-full font-l bg-zinc-900 p-2 text-white ">
       <div className="grid place-items-center grid-cols-12 p-6 container mx-auto border-b border-zinc-500">
         <div className="col-span-3 flex flex-col gap-2">
           <div className="font-l text-6xl  text-red-600">
@@ -100,7 +100,11 @@ export function Footer(){
       </div>
       <div className="flex justify-between text-zinc-700 items-center font-light text-xs container mx-auto px-4 pb-1 pt-3">
         <span>Made with by AliKh(awp)</span>
-        <span>© 2025 Journal View</span>
+        <div className="flex gap-1">
+          <span>1.0.0 -</span>
+          <span>Journal View 2025 </span>
+          <span>©</span>
+        </div>
       </div>
     </footer>
   )

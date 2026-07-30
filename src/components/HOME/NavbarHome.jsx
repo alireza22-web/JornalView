@@ -8,13 +8,13 @@ export function NavbarHome(){
       title:'ویژگی ها',
       link:'#features'
     },
+    // {
+    //   title:'مقاله ها',
+    //   link:'/'
+    // },
     {
-      title:'مقاله ها',
-      link:'#blog'
-    },
-    {
-      title:'درباره ما',
-      link:'#about'
+      title:'سوالات متداول',
+      link:'#faq'
     },
     {
       title:'تماس با ما',

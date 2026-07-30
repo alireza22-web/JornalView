@@ -43,7 +43,7 @@ export function DashPreview(){
   
   return (
 
-    <div className="flex mx-24 items-center justify-center gap-12">
+    <div id="emka" className="flex mx-24 pt-12 items-center justify-center gap-12">
       <div className=" flex flex-col gap-2">
         <h2 className="text-xl font-bold leading-tight">
           داشبوردی که فقط آمار نشان نمی‌دهد،

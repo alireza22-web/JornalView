@@ -12,6 +12,7 @@ import { ExportReport } from "./export/ExportREport"
 import { Calendar } from "./pages/Calendar"
 import { RiskManager } from "./pages/RiskManager"
 import { Gallery } from "./pages/Gallery"
+import { Drawdown } from "./pages/Drawdown"
 function App() {
   return (
     <BrowserRouter>
@@ -30,6 +31,7 @@ function App() {
       <Route path="/calendar" element={<Calendar />} />
       <Route path="/risk" element={<RiskManager />} />
       <Route path="/gallery" element={<Gallery />} />
+      <Route path="/drawdown" element={<Drawdown />} />
       
       
     </Routes>

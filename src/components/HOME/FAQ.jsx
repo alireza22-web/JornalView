@@ -44,7 +44,7 @@ export function FAQ(){
   };
 
   return (
-    <section className="mt-24 mx-12">
+    <section id="faq" className="mt-24 pt-8 mx-12">
       <div>
         <h2 className="text-2xl text-sky-800">سوالاتی که شاید برایتان پیش آمده باشد</h2>
         <div className="flex flex-col gap-4 mt-12">
