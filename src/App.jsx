@@ -8,7 +8,6 @@ import { Home } from "./pages/Home"
 import { Login } from "./components/HOME/Login"
 import './custom.css'
 import ProtectedRoute from "./routes/ProtectedRoute"
-import { ExportReport } from "./export/ExportREport"
 import { Calendar } from "./pages/Calendar"
 import { RiskManager } from "./pages/RiskManager"
 import { Gallery } from "./pages/Gallery"
