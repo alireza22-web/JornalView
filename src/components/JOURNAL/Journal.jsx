@@ -3,7 +3,6 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { Link } from "react-router-dom";
 import '../../custom.css'
-import { Trades } from "../../data/Trade";
 import { numberPnl } from "../../hooks/numberPnl";
 import { sideIcon } from "../../hooks/sideIcon";
 import { useEffect, useState } from "react";

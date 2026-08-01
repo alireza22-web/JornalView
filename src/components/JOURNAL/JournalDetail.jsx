@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import img from '../../../public/img/XAUUSD.png'
-import { Trades } from '../../data/Trade'
 import { Link, useNavigate } from 'react-router-dom'
 import { badgeResult, explaneResult } from '../../hooks/badgeResult'
 import toast from 'react-hot-toast'
