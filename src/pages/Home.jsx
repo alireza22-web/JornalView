@@ -1,5 +1,5 @@
 import { DashPreview } from "../components/HOME/DashPreview";
-import { ExplainDash } from "../components/HOME/explainDash";
+import { ExplainDash } from "../components/HOME/ExplainDash";
 import { FAQ } from "../components/HOME/FAQ";
 import { Footer } from "../components/HOME/Footer";
 import { Header } from "../components/HOME/Header";
