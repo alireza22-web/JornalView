@@ -39,7 +39,7 @@ export function Dashboard(){
   });
   const sessionValues = Object.values(sessionProfit);
   const sessionLabels = Object.keys(sessionProfit);
-  const equityData = equityCurve(trades);
+  const equityData = equityCurveEdit(trades);
 
   return (
     <div className="px-4 py-6 max-w-screen transition-colors duration-200">
