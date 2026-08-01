@@ -39,31 +39,7 @@ export function WinRateChart({ winTrade, lossTrade }) {
     ],
   };
   
-  const centerText = {
-    id: "centerText",
-    beforeDraw(chart){
-      const {ctx, chartArea} = chart;
-
-        ctx.save();
-
-        ctx.font = "bold 32px Vazirmatn";
-        ctx.fillStyle = "#22c55e";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        
-        const value = winTrade + lossTrade === 0 
-        ? 0 
-        : Math.round((winTrade / (winTrade + lossTrade))*100);
-
-        ctx.fillText(
-            `${value}%`,
-            chartArea.left + chartArea.width / 2,
-            chartArea.top + chartArea.height / 2
-        );
-
-        ctx.restore();
-    }
-  }
+  
   const options = {
     responsive: true,
     plugins: {
@@ -88,7 +64,7 @@ export function WinRateChart({ winTrade, lossTrade }) {
           className=""
           data={data}
           options={options}
-          plugins={[centerText]}
+          
         />
       </div>
     </div>
