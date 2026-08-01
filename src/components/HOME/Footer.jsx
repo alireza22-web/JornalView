@@ -63,7 +63,7 @@ export function Footer(){
         },
         {
           title: "اینستاگرام",
-          href: "https://instagram.com/",
+          href: "https://instagram.com/alikh183",
         },
       ],
     },

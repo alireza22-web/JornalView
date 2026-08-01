@@ -1,4 +1,4 @@
-import journalDash from '../../../public/img/journalMockup.png'
+import journalDash from '../../../public/img/journalMockup.webp'
 export function ExplainDash(){
   const feature = [
     {

@@ -14,7 +14,7 @@ import useTheme from "../hooks/useThem";
 export function Home(){
   return (
     <div className="bg-zinc-100 dark:bg-zinc-950 min-h-screen dark:text-zinc-100 text-zinc-900">
-      <article className="container mx-auto font-l ">
+      <article className="container mx-auto max-w-380 font-l ">
         <div className="min-h-screen">
           <NavbarHome/>
           <Header/>

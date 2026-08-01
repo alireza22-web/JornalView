@@ -1,4 +1,4 @@
-import img from '../../../public/img/loginPoster.png'
+import img from '../../../public/img/loginPoster.webp'
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 

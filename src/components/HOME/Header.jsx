@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import imgPoster from '../../../public/img/HeaderPoster3.png'
-import imgPosterDark from '../../../public/img/HeaderDark.png'
+import imgPoster from '../../../public/img/HeaderPoster3.webp'
+import imgPosterDark from '../../../public/img/HeaderDark.webp'
 import { useEffect, useState } from "react";
 import useTheme from "../../hooks/useThem";
 export function Header(){
