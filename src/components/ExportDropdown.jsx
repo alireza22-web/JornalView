@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { exportJson } from "../export/exportJson";
 import { exportPdf } from "../export/exportPdf";
-import { ExportReport } from "../export/ExportREport";
+import { ExportReport } from "../export/ExportReport";
 import { exportExcel } from "../export/exportExcel";
 
 export function ExportDropdown({ trades }) {

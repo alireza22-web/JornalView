@@ -1,25 +1,4 @@
 export function ExportReport({trades}) {
-  // const trades = [
-  //   {
-  //     "symbol": "xauusd",
-  //     "strategy": "sp2l",
-  //     "type": "خرید",
-  //     "result": "SL",
-  //     "date": "۱۴۰۵/۰۴/۳۱",
-  //     "time": "11:54",
-  //     "session": "london",
-  //     "timeframe": "1m",
-  //     "pnl": "-162",
-  //     "entry": "4117.31",
-  //     "stopLoss": "4113.69",
-  //     "takeProfit": "4120.92",
-  //     "lotSize": "0.5",
-  //     "riskReward": "1:1",
-  //     "note": "همه چی خوب بود ولیط دقت نکردم توی BTB ریزش ما بود و باعث شد استاپ من و TP اون ها بخوره و بعد شروع به روند صعودی کنه و عدد TP منا ببینه",
-  //     "image": {},
-  //     "id": 20
-  //   }
-  // ]
   return (
     <div
       id="report"
