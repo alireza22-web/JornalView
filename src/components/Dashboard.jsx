@@ -4,7 +4,7 @@ import { dashboardState } from "../utils/dashboardState";
 import CountUp from "react-countup";
 import { EquityCurve, MonthlyProfit, SessionProfitChart, WinRateChart } from "../utils/chartData";
 import { monthlyProfit } from "../hooks/montlyProfit";
-import { equityCurve } from "../hooks/equityCurve.jsX";
+import { equityCurveEdit } from "../hooks/equityCurveEdit";
 
 export function Dashboard(){
   const [trades,setTrades] = useState([])

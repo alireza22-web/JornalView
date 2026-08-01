@@ -1,4 +1,4 @@
-export function equityCurve(trades) {
+export function equityCurveEdit(trades) {
   let balance = 0;
 
   const labels = [];
