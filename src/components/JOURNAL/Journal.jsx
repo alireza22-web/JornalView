@@ -30,7 +30,17 @@ export function Journal(){
     toDate: "",
     sort: "newest",
 });
+const [currentPage, setCurrentPage] = useState(1);
+
+
+const pageSize = 5;
 const filteredTrades = filter(trades, filters);
+const totalPages = Math.ceil(filteredTrades.length / pageSize);
+const startIndex = (currentPage - 1) * pageSize;
+const endIndex = startIndex + pageSize;
+const currentTrades = filteredTrades.slice(startIndex, endIndex);
+
+
 const handleFilter = (e)=>{
   const {name,value}=e.target;
   setFilters(prev=>({
@@ -38,6 +48,9 @@ const handleFilter = (e)=>{
       [name]:value
   }));
 }
+useEffect(() => {
+  setCurrentPage(1);
+}, [filters]);
   return (
     <article className="py-2 px-6">
       <div className="flex items-center justify-between gap-1 text-center pb-3 pt-6 text-5xl border-b-2 border-dashed">
@@ -119,8 +132,8 @@ const handleFilter = (e)=>{
           </thead>
           <tbody>
             {
-              filteredTrades.length > 0 &&
-              filteredTrades.map(trade=>{
+              currentTrades.length > 0 &&
+              currentTrades.map(trade=>{
                 return(
                   <tr key={trade.id} className="hover:bg-zinc-300 uppercase dark:hover:bg-zinc-900" >
                     <th className="th-table">{trade.date}</th>
@@ -143,20 +156,28 @@ const handleFilter = (e)=>{
           filteredTrades.length == 0 && 
           <div className=" text-center text-2xl py-2">هیچی ژورنال نداری داداش</div>
         }
-        <div>
-          <div className="justify-between items-center flex px-3 py-2">
-            <span>تعداد معاملات : {trades.length}</span>
-            <span className=" flex flex-row-reverse gap-4">
-              <span>»</span>
-              <span>1</span>
-              <span>2</span>
-              <span>3</span>
-              <span>4</span>
-              <span>5</span>
-              <span>«</span>
-            </span>
-            <span>نمایش 1 تا 10 از {trades.length}</span>
+        <div className="flex justify-between items-center px-4 py-4">
+          <span>تعداد معاملات : {filteredTrades.length}</span>
+          <div className="flex items-center gap-2">
+            <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)} className="px-3 py-1 rounded-lg border">«</button>
+            {
+              Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={`px-3 py-1 rounded-lg ${
+                    currentPage === i + 1
+                      ? "dark:bg-sky-900 bg-sky-600 text-white"
+                      : "border"
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))
+            }
+            <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)} className="px-3 py-1 rounded-lg border">»</button>
           </div>
+          <span>نمایش {startIndex + 1} تا {Math.min(endIndex, filteredTrades.length)} از {filteredTrades.length}</span>
         </div>{/* pagination */}
       </div>{/* tables */}
     </article>

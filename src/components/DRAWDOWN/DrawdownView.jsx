@@ -147,7 +147,7 @@ export function DrawdownView() {
             <button className="mx-2 col-span-2 py-2 cursor-pointer transition rounded-xl bg-sky-600 hover:bg-sky-700 text-white">محاسبه</button>
           </form>
         </div>
-        <div className="flex items-center shadow-xl rounded-2xl bg-zinc-50 justify-center w-1/3">
+        <div className="flex items-center shadow-xl rounded-2xl bg-zinc-50 dark:bg-zinc-800 justify-center w-1/3">
           <div className="flex flex-col items-center justify-center h-full">
             <span className="text-zinc-500 text-sm">سرمایه اولیه</span>
             <motion.h2

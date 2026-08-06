@@ -2,7 +2,8 @@ import '../custom.css'
 import { SideBar } from "../components/SideBar";
 import { Navbar } from "../components/Navbar";
 import { Journal } from "../components/JOURNAL/Journal";
-export function JournalPage(){
+import { GuideView } from '../components/GuideView';
+export function GuidePage(){
 
   return (
     <div className="flex h-screen font-l transition-colors duration-200">
@@ -11,7 +12,7 @@ export function JournalPage(){
       </aside>
       <main className="flex-1 overflow-y-auto bg-zinc-200 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
         <Navbar/>
-        <Journal/>
+        <GuideView/>
       </main>
     </div>
   );
